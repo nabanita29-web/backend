@@ -1,18 +1,23 @@
 const express = require("express")
 const app = express()
-const mongoose = require("mongoose")
-const cors = require('cors')
-const Todo = require("./models/todo_models")
+const Todo = require('./models/todo_models.js')
+// const Todo = require("./models/todo_models")
 
-mongoose.connect('mongodb://127.0.0.1:27017/todo-crud')
-.then(() => { console.log("DB connected") })
+// mongoose.connect('mongodb://127.0.0.1:27017/todo-crud')
+// mongoose.connect('mongodb://mongo:sEuUeLFnrNRZEfjoiRMcIHOIKYgIaQia@mongodb.railway.internal:27017')
+// .then(() => { console.log("DB connected") })
 
 app.set('view engine', 'ejs')
-app.use(cors())
+Todo.connect().then(()=>console.log("Connected"))
+app.use(express.json())
+// Todo.query(`CREATE TABLE todos(task VARCHAR(100), dateof DATE)`)
+
 app.get('/', async (req, res) => {
     // res.send(req.params)
-    const todoFor = await Todo.find()
-    res.json(todoFor)
+    Todo.query(`INSERT INTO todos (task, dateof) VALUES ('XYZ', date '2026-02-13')`)
+    const todo = await Todo.query(`select * from todos`)
+    // await Todo.query(`DELETE FROM todos`)
+    res.json(todo.rows)
 })
 app.post('/', (req, res) => {
     res.send("<h1>Hello!</h1>")

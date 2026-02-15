@@ -1,14 +1,9 @@
-const mongoose = require("mongoose")
-const todoSchema = mongoose.Schema({
-    task:{
-        
-        type: String
-    },
-    date:{
-        type: Date
-    }
+const { Client } = require("pg")
+const con = new Client({
+    host:"ballast.proxy.rlwy.net",
+    user:"postgres",
+    port: 29340,
+    password:"kuvIfzohZdEVsmBStALbqgEnrXncXgTJ",
+    database: "todocrud"
 })
-
-const todo = mongoose.model("todos", todoSchema)
-
-module.exports = todo 
+module.exports = con
